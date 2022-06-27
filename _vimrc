@@ -3,10 +3,7 @@
 "
 " 设置行号
 set number
-" 语法高亮。自动识别代码，使用多种颜色表示
-syntax enable
-" 选择颜色主题(已经下载好并放到$VIM/vim82/colors文件夹下) ，推荐自行下载使用solarized主题
-"colorscheme solarized"
+
 
 " 设置gvim的字体
 set guifont=Consolas:h12
@@ -132,7 +129,7 @@ Plugin 'tpope/vim-fugitive'
 " 在vim行号旁显示git diff的差异标记
 Plugin 'airblade/vim-gitgutter'
 Plugin 'luochen1990/rainbow'
-
+Plugin 'altercation/solarized'
 
 
 " All of your Plugins must be added before the following line
@@ -182,7 +179,12 @@ let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 	\		'css': 0,
 	\	}
 	\}
-
+"颜色主题"
+set background=light
+" 语法高亮。自动识别代码，使用多种颜色表示
+syntax enable
+" 选择颜色主题(已经下载好并放到$VIM/vim82/colors文件夹下) ，推荐自行下载使用solarized主题
+colorscheme solarized
 
 
 
