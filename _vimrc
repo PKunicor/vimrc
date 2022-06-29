@@ -20,7 +20,7 @@ set guifont=Consolas:h12
 " 按下回车键后，下一行的缩进会自动跟上一行的缩进保持一致
 set autoindent
 "智能缩进
-"set smartindent 
+set smartindent 
 
 " 按下Tab键后，vim显示的空格数
 set tabstop=2
@@ -55,14 +55,15 @@ set textwidth=1000
 set laststatus=2
 
 " 设置状态条显示的信息：文件名、光标所在字符的ASCII码、光标所在字符的ASCII码的十六进制、光标所在的位置、光标所在行之上的内容占整个文件的百分比、文件总行数
-set statusline=\ %F%m%r%h%w\ \ \ \ ASCII=\%03.3b\ \ \ \ HEX=\%02.2B\ \ \ \ POS=%04l,%04v\ \ \ \ %p%%\ \ \ \ NumOfLine=%L
+set statusline=\ %F%m%r%h%w\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ POS=%04l,%04v\ \ \ \ %p%%\ \ \ \ NumOfLine=%L
+"set statusline=\ %F%m%r%h%w\ \ \ \ ASCII=\%03.3b\ \ \ \ HEX=\%02.2B\ \ \ \ POS=%04l,%04v\ \ \ \ %p%%\ \ \ \ NumOfLine=%L"
 
 " 显示行尾的空格
 highlight WhitespaceEOL ctermbg=red guibg=red
 match WhitespaceEOL /\s\+$/
 
 " 光标遇到括号时，自动高亮对应的另一半括号
-set showmatch
+"set showmatch"
 
 " 命令行模式下，在底部显示当前键入的指令。例如键入dd删除一行时，键入第一个d，底部右侧显示d，完全键入dd时，操作完成，底部显示消失
 set showcmd
