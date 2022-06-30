@@ -63,7 +63,9 @@ highlight WhitespaceEOL ctermbg=red guibg=red
 match WhitespaceEOL /\s\+$/
 
 " 光标遇到括号时，自动高亮对应的另一半括号
-"set showmatch"
+"set showmatch
+"取消高亮括号
+let loaded_matchparen=1
 
 " 命令行模式下，在底部显示当前键入的指令。例如键入dd删除一行时，键入第一个d，底部右侧显示d，完全键入dd时，操作完成，底部显示消失
 set showcmd
