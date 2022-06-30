@@ -14,6 +14,18 @@ set guifont=Consolas:h12
 "vmap <C-v> c<ESC>"+p
 "imap <C-v> <C-r><C-o>+
 
+" 常规模式禁用方向键
+nnoremap <Left>  :echoe "Use h"<CR>
+nnoremap <Right> :echoe "Use l"<CR>
+nnoremap <Up>    :echoe "Use k"<CR>
+nnoremap <Down>  :echoe "Use j"<CR>
+
+" 插入模式禁用方向键
+inoremap <Left>  <ESC>:echoe "Use h"<CR>
+inoremap <Right> <ESC>:echoe "Use l"<CR>
+inoremap <Up>    <ESC>:echoe "Use k"<CR>
+inoremap <Down>  <ESC>:echoe "Use j"<CR>
+
 " 支持使用鼠标
 set mouse=a
 
