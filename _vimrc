@@ -15,12 +15,12 @@ set guifont=Consolas:h12
 "imap <C-v> <C-r><C-o>+
 
 " 支持使用鼠标
-"set mouse=a
+set mouse=a
 
 " 按下回车键后，下一行的缩进会自动跟上一行的缩进保持一致
 set autoindent
-"智能缩进
-set smartindent 
+"智能缩进  
+set smartindent "
 
 " 按下Tab键后，vim显示的空格数
 set tabstop=2
@@ -79,13 +79,6 @@ set ignorecase
 
 " 不创建交换文件
 set noswapfile
-
-" 保留 撤销 操作历史
-set undofile
-" 设置操作历史文件的保存位置
-set undodir=$VIM\.undo
-" vim需要记住多少次历史操作
-set history=1000
 
 " 命令模式下，底部操作指令按下 Tab 键自动补全。第一次按下 Tab，会显示所有匹配的操作指令的清单；第二次按下 Tab，会依次选择各个指令
 set wildmenu
@@ -185,6 +178,7 @@ set background=light
 " 语法高亮。自动识别代码，使用多种颜色表示
 syntax enable
 " 选择颜色主题(已经下载好并放到$VIM/vim82/colors文件夹下) ，推荐自行下载使用solarized主题
+let g:solarized_termtrans=256
 colorscheme solarized
 
 
@@ -232,3 +226,19 @@ function MyDiff()
     let &shellxquote=l:shxq_sav
   endif
 endfunction
+
+"必须加载末尾才有作用
+" 关闭保留 撤销 操作历史
+set noundofile
+"设置操作历史文件的保存位置
+"set undodir=$VIM\.undo
+" vim需要记住多少次历史操作
+"set history=1000
+
+"关闭备份文件"
+set nobackup
+
+"取消回车生成注释
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+
