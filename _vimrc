@@ -243,8 +243,45 @@ let g:ycm_autoclose_preview_window_after_completion = 1      " 自动关闭窗�
 let g:ycm_autoclose_preview_window_after_insertion = 1       " 离开插入模式后自动关闭窗口
 
 
+"""""""""""""""""""""""""""""""""""""""""""
 
+function! CompileRun()
+  execute "w"
+  "C程序
+  if &filetype == 'c'
+    silent execute "!gcc -g -o %< % && %<.exe"
+    "c++程序
+  elseif &filetype == 'cpp'
+    silent execute "!g++ -g -o %< % && %<.exe"
+  endif
+endfunction
+"结束定义CompileRun
 
+"定义Run函数
+function Run()
+  if &filetype == 'c' || &filetype == 'cpp'
+    silent execute "!%<.exe"
+  endif
+endfunction
+
+"定义Debug函数，用来调试程序
+
+function! Debug()
+  execute "w"
+  "C程序
+  if &filetype == 'c'
+    silent execute "!gcc -g -o %< %"
+    silent execute "!gdb %<.exe"
+  elseif &filetype == 'cpp'
+    silent execute "!g++ -g -o %< %"
+    silent execute "!gdb %<.exe"
+endif
+endfunction
+"结束定义Debug
+"设置程序的运行和调试的快捷键F5和Ctrl-F5
+map <F5> :call CompileRun()<CR>
+map <F6> :call Run()<CR>
+map <F10> :call Debug()<CR>
 """""""""""""""""""""""""""""""""""""""""""
 
 " Vim with all enhancements
