@@ -1,6 +1,7 @@
 " 基本配置
 " 
-"
+"设置编码方式
+set encoding=utf-8
 " 设置行号
 set number
 
@@ -31,6 +32,7 @@ set mouse=a
 
 " 按下回车键后，下一行的缩进会自动跟上一行的缩进保持一致
 set autoindent
+
 "智能缩进  
 set smartindent "
 
@@ -124,24 +126,21 @@ filetype off                  " required
 
 " 所有的插件安装必须在此行语句之后
 set rtp+=$VIM/vimfiles/bundle/Vundle.vim/
-call vundle#begin('$VIM/vimfiles/bundle/')
+call plug#begin('$VIM/vimfiles/bundle/')
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
 " Keep Plugin commands between vundle#begin/end.
 "安装插件代码"
 " 在vim中使用git命令
-Plugin 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 " 在vim行号旁显示git diff的差异标记
-Plugin 'airblade/vim-gitgutter'
-Plugin 'luochen1990/rainbow'
-Plugin 'altercation/solarized'
-
-
+Plug 'airblade/vim-gitgutter'
+Plug 'luochen1990/rainbow'
+Plug 'altercation/solarized'
+Plug 'ycm-core/YouCompleteMe', {'on': [] }
 " All of your Plugins must be added before the following line
-call vundle#end()            " required
+call plug#end()            " required
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
@@ -162,6 +161,17 @@ filetype plugin indent on    " required
 """""""""""""""""""""""""""""""""""""""""""
 "插件配置部分 
 """""""""""""""""""""""""""""""""""""""""""
+"延迟加载
+" 配置：
+" 500 毫秒后调用 LoadPlug，且只调用一次, 见 `:h timer_start()`
+
+call timer_start(500, 'Loadplug')
+
+function! Loadplug(timer) abort
+  call plug#load('YouCompleteMe')
+  ":execute "packadd " . "$VIM/vimfiles/bundle/YouCompleteMe"
+endfunction
+""""""""""""""""""""""""""""""""""""""""""
 "彩虹括号"
 
 let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
@@ -187,6 +197,10 @@ let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 	\		'css': 0,
 	\	}
 	\}
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""
 "颜色主题"
 set background=light
 " 语法高亮。自动识别代码，使用多种颜色表示
@@ -197,8 +211,51 @@ colorscheme solarized
 
 
 
+"""""""""""""""""""""""""""""""""""""""""""
+"YouCompleteMe配置
+set runtimepath+=$VIM/vimfiles/bundle/YouCompleteMe
+" 寻找全局配置文件
+let g:ycm_global_ycm_extra_conf='$VIM/vimfiles/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
+"自动语义补全
+let g:ycm_semantic_triggers =  {
+  \   'c' : ['->', '.'],
+  \   'cpp,objcpp' : ['->', '.', '::'],
+  \ }
+"文件类型白名单
+let g:ycm_filetype_whitelist = {    
+			\ "c":1,
+			\ "cpp":1, 
+            \}
+set completeopt=menu,menuone
+let g:ycm_add_preview_to_completeopt = 0
+
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif "离开插入模式后自动关闭预览窗口"
+let g:ycm_auto_trigger = 1                                  "开启语义触发器
+let g:ycm_collect_identifiers_from_tags_files = 0           " 开启 YCM基于标签引擎
+let g:ycm_collect_identifiers_from_comments_and_strings = 0 " 注释与字符串中的内容也用于补全
+let g:ycm_seed_identifiers_with_syntax = 0                  " 语法关键字补全
+let g:ycm_confirm_extra_conf = 0                            " 关闭加载.ycm_extra_conf.py提示
+"let g:ycm_key_list_select_completion = ['<c-n>', '<Down>']  " 映射按键,没有这个会拦截掉tab, 导致其他插件的tab不能用.
+"let g:ycm_key_list_previous_completion = ['<c-p>', '<Up>']   "选择前一个匹配的字符串
+let g:ycm_complete_in_comments = 0                          " 在注释输入中也能补全
+let g:ycm_complete_in_strings = 0                           " 在字符串输入中也能补全
+let g:ycm_collect_identifiers_from_comments_and_strings = 0 " 注释和字符串中的文字也会被收入补全
+"let g:ycm_global_ycm_extra_conf='~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+let g:ycm_show_diagnostics_ui = 0                           " 禁用语法检查
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"             " 回车即选中当前项
+"nnoremap <c-j> :YcmCompleter GoToDefinitionElseDeclaration<CR>     " 跳转到定义处
+let g:ycm_min_num_of_chars_for_completion=99                 " 从第2个键入字符就开始罗列匹配项
+let g:ycm_echo_current_diagnostic =0                         " 禁止光标回显诊断文本
+let g:ycm_auto_hover = ''                                    " 短暂延迟后显示光标位置弹出窗口
+let g:ycm_keep_logfiles = 0                                  " 关闭保留日志文件
+let g:ycm_add_preview_to_completeopt = 0                     " 将preview字符串添加到completeopt选项中
+let g:ycm_autoclose_preview_window_after_completion = 1      " 自动关闭窗口
+let g:ycm_autoclose_preview_window_after_insertion = 1       " 离开插入模式后自动关闭窗口
 
 
+
+
+"""""""""""""""""""""""""""""""""""""""""""
 
 " Vim with all enhancements
 source $VIMRUNTIME/vimrc_example.vim
