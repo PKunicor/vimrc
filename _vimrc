@@ -125,36 +125,23 @@ filetype off                  " required
 " set the runtime path to include Vundle and initialize
 
 " 所有的插件安装必须在此行语句之后
-set rtp+=$VIM/vimfiles/bundle/Vundle.vim/
-call plug#begin('$VIM/vimfiles/bundle/')
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-
-" Keep Plugin commands between vundle#begin/end.
+call plug#begin('$VIM/vimfiles/plugged')
 "安装插件代码"
 " 在vim中使用git命令
-Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive', {'on': []}
+
 " 在vim行号旁显示git diff的差异标记
-Plug 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter', {'on': []}
 Plug 'luochen1990/rainbow'
 Plug 'altercation/solarized'
-Plug 'ycm-core/YouCompleteMe', {'on': [] }
-" All of your Plugins must be added before the following line
-call plug#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
+Plug 'ycm-core/YouCompleteMe', {'on': []}
+call plug#end()          
+
 "
 " Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-
-
+" :PlugInstall  
+" :PlugClean   
+" :PlugStatus
 
 
 
@@ -169,7 +156,9 @@ call timer_start(500, 'Loadplug')
 
 function! Loadplug(timer) abort
   call plug#load('YouCompleteMe')
-  ":execute "packadd " . "$VIM/vimfiles/bundle/YouCompleteMe"
+  call plug#load('vim-gitgutter')
+  call plug#load('vim-fugitive')
+  ":execute "packadd " . "$VIM/vimfiles/plugged/YouCompleteMe"
 endfunction
 """"""""""""""""""""""""""""""""""""""""""
 "彩虹括号"
@@ -213,7 +202,7 @@ colorscheme solarized
 
 """""""""""""""""""""""""""""""""""""""""""
 "YouCompleteMe配置
-set runtimepath+=$VIM/vimfiles/bundle/YouCompleteMe
+"set runtimepath+=$VIM/vimfiles/bundle/YouCompleteMe
 " 寻找全局配置文件
 let g:ycm_global_ycm_extra_conf='$VIM/vimfiles/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
 "自动语义补全
@@ -227,6 +216,7 @@ let g:ycm_filetype_whitelist = {
 			\ "cpp":1, 
             \}
 set completeopt=menu,menuone
+"set completeopt+=popup  "弹出式窗口
 let g:ycm_add_preview_to_completeopt = 0
 
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif "离开插入模式后自动关闭预览窗口"
