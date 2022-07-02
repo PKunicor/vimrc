@@ -135,6 +135,7 @@ Plug 'airblade/vim-gitgutter', {'on': []}
 Plug 'luochen1990/rainbow'
 Plug 'altercation/solarized'
 Plug 'ycm-core/YouCompleteMe', {'on': []}
+Plug 'rhysd/vim-clang-format', {'on': []}
 call plug#end()          
 
 "
@@ -158,7 +159,7 @@ function! Loadplug(timer) abort
   call plug#load('YouCompleteMe')
   call plug#load('vim-gitgutter')
   call plug#load('vim-fugitive')
-  ":execute "packadd " . "$VIM/vimfiles/plugged/YouCompleteMe"
+  call plug#load('vim-clang-format')
 endfunction
 """"""""""""""""""""""""""""""""""""""""""
 "彩虹括号"
@@ -242,9 +243,46 @@ let g:ycm_add_preview_to_completeopt = 0                     " 将preview字符�
 let g:ycm_autoclose_preview_window_after_completion = 1      " 自动关闭窗口
 let g:ycm_autoclose_preview_window_after_insertion = 1       " 离开插入模式后自动关闭窗口
 
-
 """""""""""""""""""""""""""""""""""""""""""
-
+"vim-clang-format 配置
+"需要下载LLVM
+"""""""""""""""""""""""""""""""""""""""""""
+             "AccessModifierOffset" : -2,                    " 访问修饰符偏移量
+             "AlwaysBreakTemplateDeclarations" : "true",     " 总是打破模板声明
+             "Standard" : "C++11",
+             "AllowShortLoopsOnASingleLine" : "false"        " 不允许循环单行
+             "AllowShortIfStatementsOnASingleLine" : "false" " 不允许if单行
+             "AllowShortFunctionsOnASingleLine" : "false"    " 不允许函数方法单行
+             "AllowAllParametersOfDeclarationOnNextLine" : "false","参数不换行
+             "AlignTrailingComments" : "true"                " 注释左对齐
+             "AlignEscapedNewlinesLeft" : "true",            " 左对齐
+             "BreakBeforeBraces" : "Custom"                  " 大括号打破使用的样式 ,全部单独设置,默认false
+             "BraceWrapping" : {"BeforeElse" : "true"},      " 设置单独的大括号格式
+             "MaxEmptyLinesToKeep" : 100000                  " 最大的空行数
+             "ColumnLimit" : 0                               " 每行字符限制  没有限制
+let g:clang_format#style_options = {
+            \ "AccessModifierOffset" : -2,                    
+            \ "AlwaysBreakTemplateDeclarations" : "true",     
+            \ "Standard" : "C++11",
+            \ "AllowShortLoopsOnASingleLine" : "false",       
+            \ "AllowShortIfStatementsOnASingleLine" : "false",
+            \ "AllowShortFunctionsOnASingleLine" : "false", 
+            \ "AllowAllParametersOfDeclarationOnNextLine" : "false",
+            \ "AlignTrailingComments" : "true",
+            \ "AlignEscapedNewlinesLeft" : "true",            
+            \ "BreakBeforeBraces" : "Custom",
+            \ "BraceWrapping" : {"BeforeElse" : "true"},
+            \ "MaxEmptyLinesToKeep" : 100000,
+            \ "ColumnLimit" : 0
+            \}
+autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
+" if you install vim-operator-user
+" Toggle auto formatting:
+nmap <Leader>C :ClangFormatAutoToggle<CR>
+"""""""""""""""""""""""""""""""""""""""""""
+"编译运行
+"""""""""""""""""""""""""""""""""""""""""""
 function! CompileRun()
   execute "w"
   "C程序
