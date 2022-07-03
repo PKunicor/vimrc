@@ -287,10 +287,10 @@ function! CompileRun()
   execute "w"
   "C程序
   if &filetype == 'c'
-    silent execute "!gcc -g -o %< % && %<.exe"
+    execute "terminal gcc -fexec-charset=GBK -Wall -g -o %< %"
     "c++程序
   elseif &filetype == 'cpp'
-    silent execute "!g++ -g -o %< % && %<.exe"
+    execute "terminal g++ -fexec-charset=GBK -Wall -g -o %< %"
   endif
 endfunction
 "结束定义CompileRun
@@ -308,10 +308,10 @@ function! Debug()
   execute "w"
   "C程序
   if &filetype == 'c'
-    silent execute "!gcc -g -o %< %"
+    execute "terminal gcc -fexec-charset=GBK -Wall -g -o %< %"
     silent execute "!gdb %<.exe"
   elseif &filetype == 'cpp'
-    silent execute "!g++ -g -o %< %"
+    execute "terminal g++ -fexec-charset=GBK -Wall -g -o %< %"
     silent execute "!gdb %<.exe"
 endif
 endfunction
