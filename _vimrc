@@ -196,7 +196,6 @@ set background=light
 " 语法高亮。自动识别代码，使用多种颜色表示
 syntax enable
 " 选择颜色主题(已经下载好并放到$VIM/vim82/colors文件夹下) ，推荐自行下载使用solarized主题
-let g:solarized_termtrans=256
 colorscheme solarized
 
 
@@ -205,11 +204,12 @@ colorscheme solarized
 "YouCompleteMe配置
 "set runtimepath+=$VIM/vimfiles/bundle/YouCompleteMe
 " 寻找全局配置文件
-let g:ycm_global_ycm_extra_conf='$VIM/vimfiles/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
+"let g:ycm_global_ycm_extra_conf='$VIM/vimfiles/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
 "自动语义补全
+"  \   'c' : ['->', '.'],
 let g:ycm_semantic_triggers =  {
   \   'c' : ['->', '.'],
-  \   'cpp,objcpp' : ['->', '.', '::'],
+  \   'cpp' : ['->', '.', '::'],
   \ }
 "文件类型白名单
 let g:ycm_filetype_whitelist = {    
@@ -220,8 +220,7 @@ set completeopt=menu,menuone
 "set completeopt+=popup  "弹出式窗口
 let g:ycm_add_preview_to_completeopt = 0
 
-autocmd InsertLeave * if pumvisible() == 0|pclose|endif "离开插入模式后自动关闭预览窗口"
-let g:ycm_auto_trigger = 1                                  "开启语义触发器
+let g:ycm_auto_trigger = 0                                  "开启语义触发器
 let g:ycm_collect_identifiers_from_tags_files = 0           " 开启 YCM基于标签引擎
 let g:ycm_collect_identifiers_from_comments_and_strings = 0 " 注释与字符串中的内容也用于补全
 let g:ycm_seed_identifiers_with_syntax = 0                  " 语法关键字补全
@@ -233,7 +232,7 @@ let g:ycm_complete_in_strings = 0                           " 在字符串输入
 let g:ycm_collect_identifiers_from_comments_and_strings = 0 " 注释和字符串中的文字也会被收入补全
 "let g:ycm_global_ycm_extra_conf='~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 let g:ycm_show_diagnostics_ui = 0                           " 禁用语法检查
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"             " 回车即选中当前项
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"       " 回车即选中当前项
 "nnoremap <c-j> :YcmCompleter GoToDefinitionElseDeclaration<CR>     " 跳转到定义处
 let g:ycm_min_num_of_chars_for_completion=99                 " 从第2个键入字符就开始罗列匹配项
 let g:ycm_echo_current_diagnostic =0                         " 禁止光标回显诊断文本
@@ -242,6 +241,7 @@ let g:ycm_keep_logfiles = 0                                  " 关闭保留日�
 let g:ycm_add_preview_to_completeopt = 0                     " 将preview字符串添加到completeopt选项中
 let g:ycm_autoclose_preview_window_after_completion = 1      " 自动关闭窗口
 let g:ycm_autoclose_preview_window_after_insertion = 1       " 离开插入模式后自动关闭窗口
+let g:ycm_key_invoke_completion = '<c-z>'                    " 使用快捷键唤醒匹配
 
 """""""""""""""""""""""""""""""""""""""""""
 "vim-clang-format 配置
