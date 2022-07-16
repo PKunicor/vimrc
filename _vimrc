@@ -20,7 +20,11 @@ nnoremap <Left>  :echoe "Use h"<CR>
 nnoremap <Right> :echoe "Use l"<CR>
 nnoremap <Up>    :echoe "Use k"<CR>
 nnoremap <Down>  :echoe "Use j"<CR>
-
+" 可视模式禁用方向键
+vnoremap <Left>  <ESC>:echoe "Use h"<CR>
+vnoremap <Right> <ESC>:echoe "Use l"<CR>
+vnoremap <Up>    <ESC>:echoe "Use k"<CR>
+vnoremap <Down>  <ESC>:echoe "Use j"<CR>
 " 插入模式禁用方向键
 inoremap <Left>  <ESC>:echoe "Use h"<CR>
 inoremap <Right> <ESC>:echoe "Use l"<CR>
@@ -233,7 +237,7 @@ let g:ycm_collect_identifiers_from_comments_and_strings = 0 " 注释和字符串
 "let g:ycm_global_ycm_extra_conf='~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 let g:ycm_show_diagnostics_ui = 0                           " 禁用语法检查
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"       " 回车即选中当前项
-"nnoremap <c-j> :YcmCompleter GoToDefinitionElseDeclaration<CR>     " 跳转到定义处
+nnoremap <c-j> :YcmCompleter GoToDefinitionElseDeclaration<CR>     " 跳转到定义处
 let g:ycm_min_num_of_chars_for_completion=99                 " 从第2个键入字符就开始罗列匹配项
 let g:ycm_echo_current_diagnostic =0                         " 禁止光标回显诊断文本
 let g:ycm_auto_hover = ''                                    " 短暂延迟后显示光标位置弹出窗口
@@ -275,8 +279,8 @@ let g:clang_format#style_options = {
             \ "MaxEmptyLinesToKeep" : 100000,
             \ "ColumnLimit" : 0
             \}
-autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
-autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
+autocmd FileType c,cpp nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+autocmd FileType c,cpp vnoremap <buffer><Leader>cf :ClangFormat<CR>
 " if you install vim-operator-user
 " Toggle auto formatting:
 nmap <Leader>C :ClangFormatAutoToggle<CR>
@@ -287,10 +291,10 @@ function! CompileRun()
   execute "w"
   "C程序
   if &filetype == 'c'
-    execute "terminal gcc -fexec-charset=GBK -Wall -g -o %< %"
+    execute "terminal gcc -fexec-charset=GBK -finput-charset=UTF-8 -finput-charset=GB2312 -Wall -g -o %< %"
     "c++程序
   elseif &filetype == 'cpp'
-    execute "terminal g++ -fexec-charset=GBK -Wall -g -o %< %"
+    execute "terminal g++ -fexec-charset=GBK -finput-charset=UTF-8 -finput-charset=GB2312 -Wall -g -o %< %"
   endif
 endfunction
 "结束定义CompileRun
@@ -308,10 +312,10 @@ function! Debug()
   execute "w"
   "C程序
   if &filetype == 'c'
-    execute "terminal gcc -fexec-charset=GBK -Wall -g -o %< %"
+    execute "terminal gcc -fexec-charset=GBK -finput-charset=UTF-8 -finput-charset=GB2312 -Wall -g -o %< %"
     silent execute "!gdb %<.exe"
   elseif &filetype == 'cpp'
-    execute "terminal g++ -fexec-charset=GBK -Wall -g -o %< %"
+    execute "terminal g++ -fexec-charset=GBK -finput-charset=UTF-8 -finput-charset=GB2312 -Wall -g -o %< %"
     silent execute "!gdb %<.exe"
 endif
 endfunction
