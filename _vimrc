@@ -1,7 +1,14 @@
 " 基本配置
 " 
-"设置编码方式
-set encoding=utf-8
+let g:iswindows = 0
+let g:islinux = 0
+if(has("win32") || has("win64") || has("win95") || has("win16"))
+  let g:iswindows = 1
+else
+  let g:islinux = 1
+endif
+
+
 " 设置行号
 set number
 
@@ -121,15 +128,19 @@ set fileencodings=ucs-bom,utf-8,chinese,cp936
 set pythonthreedll=python39.dll
 
 """"""""""""""""""""""""""""""""""""""""""
-"Vundle插件安装部分
+"vim-plug插件安装部分
 """"""""""""""""""""""""""""""""""""""""""
-" Vundle配置"
+" vim-plug配置"
 set nocompatible              " 设置vim和vi不兼容。在兼容模式下运行时，Vim 大部分增强及改善的功能就不可用了,vundle要求必须有
 filetype off                  " required
 " set the runtime path to include Vundle and initialize
 
 " 所有的插件安装必须在此行语句之后
-call plug#begin('$VIM/vimfiles/plugged')
+if(g:iswindows == 1)
+  call plug#begin('$VIM/vimfiles/plugged')
+elseif(g:islinux == 1)
+  call plug#begin('~/.vim/vimfiles/plugged')
+endif
 "安装插件代码"
 " 在vim中使用git命令
 Plug 'tpope/vim-fugitive', {'on': []}
@@ -380,5 +391,4 @@ set nobackup
 
 "取消回车生成注释
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
-
 
