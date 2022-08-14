@@ -2,8 +2,11 @@
 " 
 let g:iswindows = 0
 let g:islinux = 0
+let g:ismacos = 0
 if(has("win32") || has("win64") || has("win95") || has("win16"))
   let g:iswindows = 1
+elseif has("gui_macvim")
+  let g:ismacos = 1
 else
   let g:islinux = 1
 endif
@@ -12,9 +15,15 @@ endif
 " 设置行号
 set number
 
-
 " 设置gvim的字体
-set guifont=Consolas:h12
+if(g:iswindows == 1)
+  set guifont=Consolas:h12
+elseif(g:ismacos == 1)
+  set guifont=Monaco:h18     " OSX.
+else
+  set guifont=Monospace\ 18  " Linux.
+endif
+
 
 " 设置gvim下和外部的复制粘贴
 "vmap <C-c> "+y
@@ -138,7 +147,7 @@ filetype off                  " required
 " 所有的插件安装必须在此行语句之后
 if(g:iswindows == 1)
   call plug#begin('$VIM/vimfiles/plugged')
-elseif(g:islinux == 1)
+else
   call plug#begin('~/.vim/vimfiles/plugged')
 endif
 "安装插件代码"
@@ -220,6 +229,11 @@ colorscheme solarized
 "set runtimepath+=$VIM/vimfiles/bundle/YouCompleteMe
 " 寻找全局配置文件
 "let g:ycm_global_ycm_extra_conf='$VIM/vimfiles/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
+if(g:ismacos == 1)
+  let g:ycm_global_ycm_extra_conf = '~/.vim/vimfiles/plugged/YouCompleteMe/third_party/ycmd/examples/.ycm_extra_conf.py'
+endif
+
+
 "自动语义补全
 "  \   'c' : ['->', '.'],
 let g:ycm_semantic_triggers =  {
