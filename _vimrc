@@ -312,19 +312,19 @@ nmap <Leader>C :ClangFormatAutoToggle<CR>
 """""""""""""""""""""""""""""""""""""""""""
 "编译运行
 """""""""""""""""""""""""""""""""""""""""""
-function! CompileRun()
+function! Compile()
   execute "w"
   "C程序
   if &filetype == 'c'
     if g:ismacos == 1 
-      execute "terminal gcc-12 -fexec-charset=GBK -finput-charset=UTF-8 -finput-charset=GB2312 -Wall -g -o %< %"
+      execute "terminal gcc-12 -fexec-charset=UTF-8 -finput-charset=UTF-8 -finput-charset=GB2312 -Wall -g -o %< %"
     else
       execute "terminal gcc -fexec-charset=GBK -finput-charset=UTF-8 -finput-charset=GB2312 -Wall -g -o %< %"
     endif
     "c++程序
   elseif &filetype == 'cpp'
     if g:ismacos == 1 
-      execute "terminal g++-12 -fexec-charset=GBK -finput-charset=UTF-8 -finput-charset=GB2312 -Wall -g -o %< %"
+      execute "terminal g++-12 -fexec-charset=UTF-8 -finput-charset=UTF-8 -finput-charset=GB2312 -Wall -g -o %< %"
     else
       execute "terminal g++ -fexec-charset=GBK -finput-charset=UTF-8 -finput-charset=GB2312 -Wall -g -o %< %"
     endif
@@ -336,7 +336,7 @@ endfunction
 function Run()
   if &filetype == 'c' || &filetype == 'cpp'
     if g:ismacos == 1 
-      silent execute "!term zsh ./%<"
+      execute "!./%<"
     else
       silent execute "!%<.exe"
     endif
@@ -350,23 +350,25 @@ function! Debug()
   "C程序
   if &filetype == 'c'
     if g:ismacos == 1 
-      execute "terminal gcc-12 -fexec-charset=GBK -finput-charset=UTF-8 -finput-charset=GB2312 -Wall -g -o %< %"
+      "execute "terminal gcc-12 -fexec-charset=UTF-8 -finput-charset=UTF-8 -finput-charset=GB2312 -Wall -g -o %< %"
+      execute "!lldb %<"
     else
-      execute "terminal gcc -fexec-charset=GBK -finput-charset=UTF-8 -finput-charset=GB2312 -Wall -g -o %< %"
+      "execute "terminal gcc -fexec-charset=GBK -finput-charset=UTF-8 -finput-charset=GB2312 -Wall -g -o %< %"
+      silent execute "!gdb %<.exe"
     endif
-    silent execute "!gdb %<.exe"
   elseif &filetype == 'cpp'
     if g:ismacos == 1 
-      execute "terminal g++-12 -fexec-charset=GBK -finput-charset=UTF-8 -finput-charset=GB2312 -Wall -g -o %< %"
+      "execute "terminal g++-12 -fexec-charset=UTF-8 -finput-charset=UTF-8 -finput-charset=GB2312 -Wall -g -o %< %"
+      execute "!lldb %<"
     else
-      execute "terminal g++ -fexec-charset=GBK -finput-charset=UTF-8 -finput-charset=GB2312 -Wall -g -o %< %"
+      "execute "terminal g++ -fexec-charset=GBK -finput-charset=UTF-8 -finput-charset=GB2312 -Wall -g -o %< %"
+      silent execute "!gdb %<.exe"
     endif
-    silent execute "!gdb %<.exe"
 endif
 endfunction
 "结束定义Debug
 "设置程序的运行和调试的快捷键F5和Ctrl-F5
-map <F5> :call CompileRun()<CR>
+map <F5> :call Compile()<CR>
 map <F6> :call Run()<CR>
 map <F10> :call Debug()<CR>
 """""""""""""""""""""""""""""""""""""""""""
