@@ -89,8 +89,8 @@ set textwidth=1000
 set laststatus=2
 
 " 设置状态条显示的信息：文件名、光标所在字符的ASCII码、光标所在字符的ASCII码的十六进制、光标所在的位置、光标所在行之上的内容占整个文件的百分比、文件总行数
-set statusline=\ %F%m%r%h%w\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ POS=%04l,%04v\ \ \ \ %p%%\ \ \ \ NumOfLine=%L
-"set statusline=\ %F%m%r%h%w\ \ \ \ ASCII=\%03.3b\ \ \ \ HEX=\%02.2B\ \ \ \ POS=%04l,%04v\ \ \ \ %p%%\ \ \ \ NumOfLine=%L"
+set statusline=\ %F%m%r%h%w\ \ \ \ %{&fileencoding?&fileencoding:&encoding}\ \ \ \ POS=%04l,%04v\ \ \ \ %p%%\ \ \ \ NumOfLine=%L
+"set statusline=\ %F%m%r%h%w\ \ \ \ ASCII=\%03.3b\ \ \ \ HEX=\%02.2B\ \ \ \ POS=%04l,04v\ \ \ \ %p%%\ \ \ \ NumOfLine=%L"
 
 " 显示行尾的空格
 highlight WhitespaceEOL ctermbg=red guibg=red
@@ -316,10 +316,18 @@ function! CompileRun()
   execute "w"
   "C程序
   if &filetype == 'c'
-    execute "terminal gcc -fexec-charset=GBK -finput-charset=UTF-8 -finput-charset=GB2312 -Wall -g -o %< %"
+    if g:ismacos == 1 
+      execute "terminal gcc-12 -fexec-charset=GBK -finput-charset=UTF-8 -finput-charset=GB2312 -Wall -g -o %< %"
+    else
+      execute "terminal gcc -fexec-charset=GBK -finput-charset=UTF-8 -finput-charset=GB2312 -Wall -g -o %< %"
+    endif
     "c++程序
   elseif &filetype == 'cpp'
-    execute "terminal g++ -fexec-charset=GBK -finput-charset=UTF-8 -finput-charset=GB2312 -Wall -g -o %< %"
+    if g:ismacos == 1 
+      execute "terminal g++-12 -fexec-charset=GBK -finput-charset=UTF-8 -finput-charset=GB2312 -Wall -g -o %< %"
+    else
+      execute "terminal g++ -fexec-charset=GBK -finput-charset=UTF-8 -finput-charset=GB2312 -Wall -g -o %< %"
+    endif
   endif
 endfunction
 "结束定义CompileRun
@@ -327,7 +335,11 @@ endfunction
 "定义Run函数
 function Run()
   if &filetype == 'c' || &filetype == 'cpp'
-    silent execute "!%<.exe"
+    if g:ismacos == 1 
+      silent execute "!term zsh ./%<"
+    else
+      silent execute "!%<.exe"
+    endif
   endif
 endfunction
 
@@ -337,10 +349,18 @@ function! Debug()
   execute "w"
   "C程序
   if &filetype == 'c'
-    execute "terminal gcc -fexec-charset=GBK -finput-charset=UTF-8 -finput-charset=GB2312 -Wall -g -o %< %"
+    if g:ismacos == 1 
+      execute "terminal gcc-12 -fexec-charset=GBK -finput-charset=UTF-8 -finput-charset=GB2312 -Wall -g -o %< %"
+    else
+      execute "terminal gcc -fexec-charset=GBK -finput-charset=UTF-8 -finput-charset=GB2312 -Wall -g -o %< %"
+    endif
     silent execute "!gdb %<.exe"
   elseif &filetype == 'cpp'
-    execute "terminal g++ -fexec-charset=GBK -finput-charset=UTF-8 -finput-charset=GB2312 -Wall -g -o %< %"
+    if g:ismacos == 1 
+      execute "terminal g++-12 -fexec-charset=GBK -finput-charset=UTF-8 -finput-charset=GB2312 -Wall -g -o %< %"
+    else
+      execute "terminal g++ -fexec-charset=GBK -finput-charset=UTF-8 -finput-charset=GB2312 -Wall -g -o %< %"
+    endif
     silent execute "!gdb %<.exe"
 endif
 endfunction
