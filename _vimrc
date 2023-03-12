@@ -70,7 +70,11 @@ set softtabstop=2
 
 
 " 光标所在行高亮
-set cursorline
+if $SSH_CONNECTION
+  "set cursorline
+else
+  set cursorline
+endif
 highlight CursorLine   cterm=NONE ctermbg=black guibg=NONE guifg=NONE
 
 " 关闭自动折行
@@ -216,11 +220,16 @@ let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 
 """""""""""""""""""""""""""""""""""""""""""
 "颜色主题"
-set background=light
+if $SSH_CONNECTION
+  set background=dark
+  colorscheme solarized
+else
+  set background=light
+  colorscheme solarized
+endif
 " 语法高亮。自动识别代码，使用多种颜色表示
-syntax enable
+"syntax enable
 " 选择颜色主题(已经下载好并放到$VIM/vim82/colors文件夹下) ，推荐自行下载使用solarized主题
-colorscheme solarized
 
 
 
