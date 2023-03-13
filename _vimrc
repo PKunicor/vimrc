@@ -239,7 +239,7 @@ endif
 """""""""""""""""""""""""""""""""""""""""""
 "NERDTree配置
 ":NERDTree   打开目录树
-map <F10> :NERDTreeToggle<CR>
+map <F11> :NERDTreeToggle<CR>
 
 
 
