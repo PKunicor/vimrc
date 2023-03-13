@@ -164,6 +164,7 @@ Plug 'luochen1990/rainbow'
 Plug 'altercation/solarized'
 Plug 'ycm-core/YouCompleteMe', {'on': []}
 Plug 'rhysd/vim-clang-format', {'on': []}
+Plug 'preservim/nerdtree', {'on': []}
 call plug#end()          
 
 "
@@ -186,6 +187,7 @@ call timer_start(500, 'Loadplug')
 function! Loadplug(timer) abort
   call plug#load('YouCompleteMe')
   call plug#load('vim-gitgutter')
+  call plug#load('nerdtree')
   call plug#load('vim-fugitive')
   call plug#load('vim-clang-format')
 endfunction
@@ -230,6 +232,15 @@ endif
 " 语法高亮。自动识别代码，使用多种颜色表示
 "syntax enable
 " 选择颜色主题(已经下载好并放到$VIM/vim82/colors文件夹下) ，推荐自行下载使用solarized主题
+
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""
+"NERDTree配置
+":NERDTree   打开目录树
+map <F10> :NERDTreeToggle<CR>
+
 
 
 
