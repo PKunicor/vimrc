@@ -165,6 +165,7 @@ Plug 'altercation/solarized'
 Plug 'ycm-core/YouCompleteMe', {'on': []}
 Plug 'rhysd/vim-clang-format', {'on': []}
 Plug 'preservim/nerdtree', {'on': []}
+
 call plug#end()          
 
 "
@@ -239,10 +240,13 @@ endif
 """""""""""""""""""""""""""""""""""""""""""
 "NERDTree配置
 ":NERDTree   打开目录树
-map <F11> :NERDTreeToggle<CR>
-
-
-
+map <F2> :NERDTreeToggle<CR>
+"窗口是否显示行号
+let g:NERDTreeShowLineNumbers=1
+"显示隐藏文件
+let NERDTreeShowHidden=1 
+"当NERDTree为剩下的唯一窗口时自动关闭
+autocmd bufenter * if(winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 """""""""""""""""""""""""""""""""""""""""""
 "YouCompleteMe配置
